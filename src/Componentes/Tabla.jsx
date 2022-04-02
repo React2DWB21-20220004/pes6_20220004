@@ -198,7 +198,7 @@ export default function CustomPaginationActionsTable(props) {
       ) : (
         <div
           style={{
-            height: "60vh",
+            height: "80vh",
             width: "100%",
             display: "flex",
             justifyContent: "center",

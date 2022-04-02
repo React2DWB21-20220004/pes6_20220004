@@ -4,9 +4,11 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 import StorageIcon from "@mui/icons-material/Storage";
 import Stack from "@mui/material/Stack";
 import Tabla from "./Tabla";
-import DropzoneDialog from "./Dialogs";
+import DropzoneDialog from "./DialogCargaMasiva";
+import DialogAgregar from "./DialogAgregar";
 const Habilidades = (props) => {
   const [arrayHabilidades, setArrayHabilidades] = React.useState([]);
+  const [openAgregarDialog, setOpenAgregarDialog] = React.useState(false);
   const [openDropzone, setOpenDropzone] = React.useState(false);
   return (
     <section>
@@ -33,9 +35,25 @@ const Habilidades = (props) => {
                 setArrayHabilidades(newArray);
               }}
             />
-            <Button variant="contained" startIcon={<PostAddIcon />}>
+            <Button
+              onClick={() => {
+                setOpenAgregarDialog(true);
+              }}
+              variant="contained"
+              startIcon={<PostAddIcon />}
+            >
               Agregar
             </Button>
+            <DialogAgregar
+              open={openAgregarDialog}
+              onClose={() => {
+                setOpenAgregarDialog(false);
+              }}
+              array={arrayHabilidades}
+              agregarArray={(newArray) => {
+                setArrayHabilidades(newArray);
+              }}
+            />
           </Stack>
         </div>
       </div>
