@@ -6,9 +6,30 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Box } from "@mui/system";
 import { TextField } from "@mui/material";
+import Dialogs from "./Dialogs";
+import { useState } from "react";
 
 const DialogAgregar = (props) => {
   const { open, onClose, array, agregarArray } = props;
+
+  const handleSave = () => {
+    console.log(habilidad);
+    console.log(descripcion);
+
+    if (habilidad && descripcion) {
+      /* createData(habilidad,descripcion); */
+      setOpenW(true);
+    } else {
+      alert("Complete todos los recuadros");
+    }
+  };
+  const handleContinuar = () => {
+    setOpenW(false);
+    setOpenC(true);
+  };
+  const [openWarningDialog, setOpenW] = useState(false);
+  const [openConfirmationDialog, setOpenC] = useState(false);
+
   const [habilidad, setHabilidad] = React.useState();
   const [descripcion, setDescripcion] = React.useState();
   const handleClose = () => {
@@ -55,7 +76,13 @@ const DialogAgregar = (props) => {
               id="outlined-required"
               label="Habilidad"
               onChange={(e) => {
-                setHabilidad(e.target.value);
+                if (
+                  e.target.value.lastIndexOf(" ") !==
+                  e.target.value.length - 1
+                ) {
+                  console.log(habilidad);
+                  setHabilidad(e.target.value);
+                }
               }}
             />
             <TextField
@@ -65,7 +92,13 @@ const DialogAgregar = (props) => {
               id="outlined-required"
               label="Descripción"
               onChange={(e) => {
-                setDescripcion(e.target.value);
+                if (
+                  e.target.value.lastIndexOf(" ") !==
+                  e.target.value.length - 1
+                ) {
+                  console.log(descripcion);
+                  setDescripcion(e.target.value);
+                }
               }}
             />
           </div>
@@ -73,9 +106,32 @@ const DialogAgregar = (props) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancelar</Button>
-        <Button onClick={handleAgregar} autoFocus>
+        <Button onClick={handleSave} autoFocus>
           Aceptar
         </Button>
+        <Dialogs
+          abrir={openWarningDialog}
+          onClose={() => {
+            setOpenW(false);
+          }}
+          message={"¿Desea guardar los cambios?"}
+          tipoAlerta="warning"
+          onContinuar={handleContinuar}
+          agregarArray={agregarArray}
+          habilidad={habilidad}
+          descripcion={descripcion}
+          setHabilidad={setHabilidad}
+          setDescripcion={setDescripcion}
+        />
+        <Dialogs
+          abrir={openConfirmationDialog}
+          onClose={() => {
+            setOpenC(false);
+          }}
+          message={"¡Cambios guardados exitosamente!"}
+          tipoAlerta="exito"
+          onCloseA={onClose}
+        />
       </DialogActions>
     </Dialog>
   );
