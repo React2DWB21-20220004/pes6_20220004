@@ -70,7 +70,7 @@ const BarraNavegacion = (props) => {
           variant="permanent"
           anchor="left"
         >
-          <div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <img style={{ width: "8vw" }} src={logo} alt="logo" />
           </div>
 
